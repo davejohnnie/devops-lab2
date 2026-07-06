@@ -1,0 +1,31 @@
+name: Branch Flow Validation
+
+on:
+  pull_request:
+    branches:
+      - staging
+      - main
+
+jobs:
+  validate-branch-flow:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Validate source branch
+        run: |
+          echo "Base branch: ${{ github.base_ref }}"
+          echo "Source branch: ${{ github.head_ref }}"
+
+          if [[ "${{ github.base_ref }}" == "staging" && "${{ github.head_ref }}" != "develop" ]]; then
+            echo "Error: Pull requests into staging must come from develop."
+            exit 1
+          fi
+
+          if [[ "${{ github.base_ref }}" == "main" && "${{ github.head_ref }}" != "staging" ]]; then
+            echo "Error: Pull requests into main must come from staging."
+            exit 1
+          fi
+
+          echo "✓ develop -> staging allowed"
+          echo "✓ staging -> main allowed"
+          echo "Branch flow validation passed."
