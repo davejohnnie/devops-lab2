@@ -1,0 +1,9 @@
+.github/ @davejohnnie
+.github/workflows/ @davejohnnie
+.github/CODEOWNERS @VenusKareen
+
+/backend/ @VenusKareen
+/frontend/ @davejohnnie
+/devops/ @davejohnnie @VenusKareen
+
+* @davejohnnie
